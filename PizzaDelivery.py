@@ -4,6 +4,7 @@ from selenium.webdriver.support.ui import Select
 import time
 
 
+
 Firstname=input("First Name:")
 Lastname=input("Last Name:")
 email=input("Email:")
@@ -104,41 +105,68 @@ if Place == "Other":
 
 
 driver.find_element_by_xpath("//*[@id='locationSearchForm']/div/div[4]/button").click()
-time.sleep(2)
+time.sleep(3)
 driver.find_element_by_xpath("//*[@id='locationsResultsPage']/div[2]/div[2]/div[1]/div[2]/div/div[2]/div/a").click()
-time.sleep(2)
+time.sleep(3)
 driver.find_element_by_xpath("//*[@id='entree-Pizza']/a").click()
-time.sleep(2)
+time.sleep(3)
 
 
 if Delivery == "Delivery":
         driver.find_element_by_id("Service_Method_Delivery").click()
         time.sleep(2)
 
-
+if driver.find_element_by_xpath("//*[@id='genericOverlay']/section/header/button").is_displayed() == True:
+    driver.find_element_by_xpath("//*[@id='genericOverlay']/section/header/button").click()
+    time.sleep(2)
 
 if Food == "Ultimate Pepperoni":
         driver.find_element_by_xpath("//*[@id='categoryPage2']/section/div/div[9]/div/a[1]").click()
+        order = "Ultimate Pepperoni"
 if Food == "Pacific Veggie":
         driver.find_element_by_xpath("//*[@id='categoryPage2']/section/div/div[4]/div/a[1]").click()
+        order = "Pacific Veggie"
 if Food == "Buffalo Chicken":
         driver.find_element_by_xpath("//*[@id='categoryPage2']/section/div/div[8]/div/a[1]").click()
+        order = "Buffalo Chicken"
 if Food == "Honolulu Hawaiian":
         driver.find_element_by_xpath("//*[@id='categoryPage2']/section/div/div[5]/div/a[1]").click()
+        order = "Honolulu Hawaiian"
 if Food == "Wisconsin 6 Cheese":
         driver.find_element_by_xpath("//*[@id='categoryPage2']/section/div/div[11]/div/a[1]").click()
+        order = "Wisconsin 6 Cheese"
 if Food == "Spinach & Feta":
         driver.find_element_by_xpath("//*[@id='categoryPage2']/section/div/div[12]/div/a[1]").click()
+        order = "Spinach & Feta"
 
+time.sleep(3)
+driver.find_element_by_xpath("//*[@id='js-myOrderPage']/a").click()
 time.sleep(2)
-driver.find_element_by_xpath("//*[@id='orderSummaryInColumn']/div[2]/div[1]/a").click()
-time.sleep(2)
+
 driver.find_element_by_xpath("//*[@id='genericOverlay']/section/div/div[2]/div/a").click()
-time.sleep(2)
-driver.find_element_by_xpath("//*[@id='js-checkoutColumns']/aside/a").click()
+
+time.sleep(5)
+
+if driver.find_element_by_xpath("//*[@id='js-checkoutColumns']/aside/div[3]/a").is_displayed() == True:
+    driver.find_element_by_xpath("//*[@id='js-checkoutColumns']/aside/div[3]/a").click()
+else:
+    print("")
+
+
+
 time.sleep(4)
 driver.find_element_by_name("First_Name").send_keys(Firstname)
 driver.find_element_by_name("Last_Name").send_keys(Lastname)
 driver.find_element_by_name("Email").send_keys(email)
 driver.find_element_by_name("Callback_Phone").send_keys(Phone)
 driver.find_element_by_xpath("//*[@id='orderPaymentPage']/form/div[5]/div/div[2]/div/div[4]/label/input").click()
+
+
+
+print("you are ordering a",order)
+confirmation = input("write ok if thats what you want, if it isnt, type no\n"
+                     "Answer:")
+if confirmation == "ok":
+    driver.find_element_by_xpath("//*[@id='orderPaymentPage']/form/div[6]/div/div[3]/button").click()
+if confirmation == "no":
+    print("Reset")
